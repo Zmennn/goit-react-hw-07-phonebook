@@ -34,7 +34,6 @@ export default function App() {
   };
 
   const handleFilter = () => {
-    console.table(contacts);
     return contacts.filter(el => {
       const arr = el.name.toLowerCase().split(' ');
 
