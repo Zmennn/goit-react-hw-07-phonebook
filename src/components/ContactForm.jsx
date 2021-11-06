@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import PropTypes from "prop-types";
 import style from './ContactsList.module.css';
 import { v4 as uuidv4 } from 'uuid';
+import { connect } from 'react-redux';
+import { submitRecord } from '../redux/actions';
 
 
 
 
-export default function ContactForm ({handleSubmit}) {
+
+function ContactForm({ add }) {
  const inputNameId = uuidv4();
   const inputNumberId = uuidv4();
   
@@ -25,7 +28,7 @@ export default function ContactForm ({handleSubmit}) {
   return (<>
       <form className={style.form} onSubmit={(e) => {
         e.preventDefault();
-        handleSubmit(name,number);       
+        add([name,number]);       
         setName("");
         setNumber("")  
       }}>
@@ -60,8 +63,17 @@ export default function ContactForm ({handleSubmit}) {
         >Add contact</button>
       </form>
     </>)
-}
+};
 
-ContactForm.propTypes = {
-    handleSubmit: PropTypes.func.isRequired
-}
+
+
+const dispatchProps = dispatch => ({
+  add: data => dispatch(submitRecord(data))
+});
+
+export default connect(null,dispatchProps)(ContactForm);
+
+
+// ContactForm.propTypes = {
+//     handleSubmit: PropTypes.func.isRequired
+// }

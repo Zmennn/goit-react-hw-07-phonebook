@@ -3,16 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import store from './redux/store';
-import { myAction, aCtion2 } from './redux/actions';
-
-console.log(store);
-console.log(store.getState());
-store.dispatch(myAction('ttyy'));
-store.dispatch(aCtion2);
+import { Provider } from 'react-redux';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

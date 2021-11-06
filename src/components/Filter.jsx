@@ -1,11 +1,11 @@
 import style from './ContactsList.module.css';
 import React, {  } from 'react';
 import PropTypes from "prop-types";
+import { connect } from 'react-redux';
+import {changeFilter} from '../redux/actions'
 
 
-
-
-export default function Filter({handleChangeFindInput}) {
+ function Filter({filterData}) {
      return (<>
             <label htmlFor="find">Find contacts by name</label>
             <input
@@ -15,11 +15,16 @@ export default function Filter({handleChangeFindInput}) {
                 type="text"
                 name="name"
                 pattern="^[a-zA-Zа-яА-Я]"
-                onChange={(ev) => { ev.preventDefault(); handleChangeFindInput(ev) }}
+                onChange={(ev) => { ev.preventDefault(); filterData(ev.target.value.toLowerCase()) }}
                 ></input>
      </>   )
 };
 
-Filter.propTypes = {
-    handleChangeFindInput: PropTypes.func.isRequired
-}
+const dispatchProps = dispatch => ({
+     filterData:data=>dispatch(changeFilter(data))
+})
+
+export default connect(null,dispatchProps)(Filter)
+// Filter.propTypes = {
+//     handleChangeFindInput: PropTypes.func.isRequired
+// }
