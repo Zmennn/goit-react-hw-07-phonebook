@@ -74,6 +74,6 @@ const dispatchProps = dispatch => ({
 export default connect(null,dispatchProps)(ContactForm);
 
 
-// ContactForm.propTypes = {
-//     handleSubmit: PropTypes.func.isRequired
-// }
+ContactForm.propTypes = {
+    add: PropTypes.func.isRequired
+}

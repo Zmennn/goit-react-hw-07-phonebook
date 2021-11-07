@@ -25,6 +25,6 @@ const dispatchProps = dispatch => ({
 })
 
 export default connect(null,dispatchProps)(Filter)
-// Filter.propTypes = {
-//     handleChangeFindInput: PropTypes.func.isRequired
-// }
+Filter.propTypes = {
+    filterData: PropTypes.func.isRequired
+}

@@ -1,6 +1,6 @@
 import React, { } from 'react';
 import style from './ContactsList.module.css';
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { deleteRecord } from '../redux/actions';
 
@@ -22,7 +22,7 @@ function ContactsList({ del, contacts,filter }) {
       return false;
     });
     };
-    console.log(filteredContacts());
+    
         return (
             <ul className={style.list}>        
                 {
@@ -55,9 +55,9 @@ const dispatchProps = dispatch => ({
 
 export default connect(stateToProps,dispatchProps)(ContactsList);
 
-// ContactsList.propTypes = {
-//     contacts: PropTypes.array.isRequired,
-//     handleDelete: PropTypes.func.isRequired,
-// };
+ContactsList.propTypes = {
+    contacts: PropTypes.array.isRequired,
+    del: PropTypes.func.isRequired   
+};
 
 

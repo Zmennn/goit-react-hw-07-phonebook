@@ -18,8 +18,6 @@ const preloadState = {
 };
 
 function reducer(state, action) {
-  console.log(action);
-
   switch (action.type) {
     case 'deleteRecord':
       const data = state.contacts.filter(elem => elem.id !== action.payload);
@@ -41,18 +39,12 @@ function reducer(state, action) {
         return state;
       }
     case 'changeFilter':
-      console.log(action.payload);
       return { ...state, filter: new RegExp(`^${action.payload}`) };
 
     default:
       return state;
   }
 }
-
-// const handleChangeFindInput = ev => {
-//   const regExp = new RegExp(`^${ev.target.value.toLowerCase()}`);
-//   setFilter(regExp);
-// };
 
 // const rootReducer = combineReducers({
 //     del,
@@ -69,5 +61,3 @@ const store = createStore(
 );
 
 export default store;
-
-// ...state,
