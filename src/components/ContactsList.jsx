@@ -15,7 +15,7 @@ function ContactsList({ del, contacts,filter }) {
     return contacts.filter(el => {
       const arr = el.name.toLowerCase().split(' ');
       for (let i = 0; i < arr.length; i++) {
-        if (arr[i].toLowerCase().match(filter) !== null) {
+        if (arr[i].toLowerCase().match(new RegExp(`^${filter}`)) !== null) {
           return true;
         }
       }

@@ -15,13 +15,13 @@ import {changeFilter} from '../redux/actions'
                 type="text"
                 name="name"
                 pattern="^[a-zA-Zа-яА-Я]"
-                onChange={(ev) => { ev.preventDefault(); filterData(ev.target.value.toLowerCase()) }}
+                onChange={filterData}
                 ></input>
      </>   )
 };
 
 const dispatchProps = dispatch => ({
-     filterData:data=>dispatch(changeFilter(data))
+     filterData:ev=>dispatch(changeFilter(ev.target.value.toLowerCase()))
 })
 
 export default connect(null,dispatchProps)(Filter)
