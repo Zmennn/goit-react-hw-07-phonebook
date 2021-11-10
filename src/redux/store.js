@@ -20,8 +20,6 @@ const preloadState = {
   filter: '',
 };
 
-console.log(preloadState);
-
 const store = configureStore({
   reducer: reducer,
   middleware: middleware,

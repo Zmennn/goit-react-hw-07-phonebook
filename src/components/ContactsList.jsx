@@ -1,14 +1,18 @@
 import React, { } from 'react';
 import style from './ContactsList.module.css';
-import PropTypes from "prop-types";
-import { connect, useDispatch, useSelector } from 'react-redux';
+// import PropTypes from "prop-types";
+import {  useDispatch, useSelector } from 'react-redux';
 import { deleteRecord } from '../redux/actions';
 
 
 
 
-function ContactsList({ del,contacts ,filter }) {
-   
+function ContactsList() {
+    const contacts = useSelector(state => state.contacts);
+    const filter = useSelector(state => state.filter);
+    const dispatch = useDispatch();
+    const del = id => dispatch(deleteRecord(id));
+
     const handleDelete = (ev) => { del(ev.target.id) };
 
     const filteredContacts = () => {
@@ -42,22 +46,22 @@ function ContactsList({ del,contacts ,filter }) {
     )
 };
 
-const stateToProps = state => {
-    return {
-        contacts: state?.contacts ?? [],
-        filter:state?.filter??""
-    }
-};
-const dispatchProps = dispatch => ({
-    del: id => dispatch(deleteRecord(id))
-});
+// const stateToProps = state => {
+//     return {
+//         contacts: state?.contacts ?? [],
+//         filter:state?.filter??""
+//     }
+// // };
+// const dispatchProps = dispatch => ({
+//     del: id => dispatch(deleteRecord(id))
+// });
 
+export default ContactsList
+// export default connect(stateToProps,dispatchProps)(ContactsList);
 
-export default connect(stateToProps,dispatchProps)(ContactsList);
-
-ContactsList.propTypes = {
-    contacts: PropTypes.array.isRequired,
-    del: PropTypes.func.isRequired   
-};
+// ContactsList.propTypes = {
+//     contacts: PropTypes.array.isRequired,
+//     del: PropTypes.func.isRequired   
+// };
 
 
