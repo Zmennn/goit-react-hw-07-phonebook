@@ -25,6 +25,7 @@ console.log(preloadState);
 const store = configureStore({
   reducer: reducer,
   middleware: middleware,
+  devTools: process.env.NODE_ENV === 'development',
   preloadedState: preloadState,
 });
 

@@ -7,7 +7,7 @@ import { deleteRecord } from '../redux/actions';
 
 
 
-function ContactsList({ del, contacts,filter }) {
+function ContactsList({ del,contacts ,filter }) {
    
     const handleDelete = (ev) => { del(ev.target.id) };
 
