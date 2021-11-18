@@ -59,9 +59,5 @@ function ContactsList() {
 export default ContactsList
 // export default connect(stateToProps,dispatchProps)(ContactsList);
 
-// ContactsList.propTypes = {
-//     contacts: PropTypes.array.isRequired,
-//     del: PropTypes.func.isRequired   
-// };
 
 

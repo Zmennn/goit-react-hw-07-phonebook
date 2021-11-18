@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import style from './ContactsList.module.css';
 import { v4 as uuidv4 } from 'uuid';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import { submitRecord } from '../redux/actions';
+import { useDispatch } from 'react-redux';
 
 
 
 
-
-function ContactForm({ add }) {
+export default function ContactForm() {
  const inputNameId = uuidv4();
   const inputNumberId = uuidv4();
   
@@ -24,6 +24,9 @@ function ContactForm({ add }) {
       setNumber(ev.target.value)
     };
   };
+
+  const dispatch = useDispatch();
+  const add = (data) => dispatch(submitRecord(data));
 
   return (<>
       <form className={style.form} onSubmit={(e) => {
@@ -67,13 +70,13 @@ function ContactForm({ add }) {
 
 
 
-const dispatchProps = dispatch => ({
-  add: data => dispatch(submitRecord(data))
-});
+// const dispatchProps = dispatch => ({
+//   add: data => dispatch(submitRecord(data))
+// });
 
-export default connect(null,dispatchProps)(ContactForm);
+// export default connect(null,dispatchProps)(ContactForm);
 
 
-ContactForm.propTypes = {
-    add: PropTypes.func.isRequired
-}
+// ContactForm.propTypes = {
+//     add: PropTypes.func.isRequired
+// }
