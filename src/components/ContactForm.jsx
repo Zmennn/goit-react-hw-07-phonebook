@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-// import PropTypes from "prop-types";
+import React, { useState} from 'react';
+
 import style from './ContactsList.module.css';
 import { v4 as uuidv4 } from 'uuid';
-// import { connect } from 'react-redux';
-import { submitRecord } from '../redux/actions';
-import { useDispatch } from 'react-redux';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { submitPhone } from '../redux/operation';
 
 
 
@@ -14,7 +14,9 @@ export default function ContactForm() {
   const inputNumberId = uuidv4();
   
   const [name,setName] = useState("");
-  const [number,setNumber] = useState("");
+  const [number, setNumber] = useState("");
+  
+  const contacts = useSelector(state => state.contacts);
 
   const handleChangeAllInput = (ev) => {
        
@@ -26,14 +28,28 @@ export default function ContactForm() {
   };
 
   const dispatch = useDispatch();
-  const add = (data) => dispatch(submitRecord(data));
+  const addPhone = (data) => dispatch(submitPhone(data));
+
+
+  function add(data) {
+  if (!contacts.find(el => el.name === data[0])) {
+    
+    addPhone({
+      name: data[0],
+      phone:data[1]
+    })
+    
+  } else {
+    alert(`${data[0]} is already in contacts`);
+    
+  }
+}
 
   return (<>
       <form className={style.form} onSubmit={(e) => {
         e.preventDefault();
         add([name,number]);       
-        setName("");
-        setNumber("")  
+         
       }}>
         <label className={style.label} htmlFor={inputNameId}>Name</label>
         <input
@@ -68,15 +84,3 @@ export default function ContactForm() {
     </>)
 };
 
-
-
-// const dispatchProps = dispatch => ({
-//   add: data => dispatch(submitRecord(data))
-// });
-
-// export default connect(null,dispatchProps)(ContactForm);
-
-
-// ContactForm.propTypes = {
-//     add: PropTypes.func.isRequired
-// }

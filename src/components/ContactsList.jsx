@@ -1,21 +1,29 @@
-import React, { } from 'react';
+import React, { useEffect } from 'react';
 import style from './ContactsList.module.css';
-// import PropTypes from "prop-types";
 import {  useDispatch, useSelector } from 'react-redux';
-import { deleteRecord } from '../redux/actions';
+import { fetchPhones,deleteById } from '../redux/operation';
 
 
 
 
 function ContactsList() {
-    const contacts = useSelector(state => state.contacts);
-    const filter = useSelector(state => state.filter);
-    const dispatch = useDispatch();
-    const del = id => dispatch(deleteRecord(id));
+  const contacts = useSelector(state => state.contacts);
+  const filter = useSelector(state => state.filter);
+  const isDelete = useSelector((state) => state.isDelete);
+  const isSubmit=useSelector((state)=>state.isSubmit)
 
-    const handleDelete = (ev) => { del(ev.target.id) };
+  const dispatch = useDispatch();
+  const del = id => dispatch(deleteById(id));
+  
 
-    const filteredContacts = () => {
+
+  const phones = () => dispatch(fetchPhones());
+  useEffect(() => { phones() }, []);
+  useEffect(() => { if (isDelete) { phones() } }, [isDelete]);
+  useEffect(() => { if (isSubmit) { phones() } }, [isSubmit]);
+  
+  
+    function filteredContacts() {
     return contacts.filter(el => {
       const arr = el.name.toLowerCase().split(' ');
       for (let i = 0; i < arr.length; i++) {
@@ -25,7 +33,7 @@ function ContactsList() {
       }
       return false;
     });
-    };
+  }
     
         return (
             <ul className={style.list}>        
@@ -33,12 +41,12 @@ function ContactsList() {
                     filteredContacts().map(el => (<li
                         className={style.listItem}
                         key={el.id} >
-                        {el.name}:  {el.number}
+                        {el.name}:  {el.phone}
                         <button
                             type="button"
                             className={style.deleteButton}
                             id={el.id}
-                            onClick={handleDelete}
+                            onClick={del}
                         >Delete</button>
                       </li>))
                 }
@@ -46,18 +54,9 @@ function ContactsList() {
     )
 };
 
-// const stateToProps = state => {
-//     return {
-//         contacts: state?.contacts ?? [],
-//         filter:state?.filter??""
-//     }
-// // };
-// const dispatchProps = dispatch => ({
-//     del: id => dispatch(deleteRecord(id))
-// });
 
 export default ContactsList
-// export default connect(stateToProps,dispatchProps)(ContactsList);
+
 
 
 

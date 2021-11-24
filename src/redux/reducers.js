@@ -1,37 +1,47 @@
-import { v4 as uuidv4 } from 'uuid';
-// import { combineReducers } from 'redux';
-import { createReducer } from '@reduxjs/toolkit';
-import { submitRecord, changeFilter, deleteRecord } from './actions';
+import { createReducer, combineReducers } from '@reduxjs/toolkit';
+import { changeFilter } from './actions';
+import { fetchPhones, deleteById, submitPhone } from './operation';
 
-function delRecord(state = {}, action) {
-  const data = state.contacts.filter(elem => elem.id !== action.payload);
-  localStorage.setItem('contacts', JSON.stringify(data));
-  return { ...state, contacts: data };
-}
-
-function addRecord(state = {}, action) {
-  if (!state.contacts.find(el => el.name === action.payload[0])) {
-    const data = [
-      ...state.contacts,
-      { name: action.payload[0], number: action.payload[1], id: uuidv4() },
-    ];
-    localStorage.setItem('contacts', JSON.stringify(data));
-    return { ...state, contacts: data };
-  } else {
-    alert(`${action.payload[0]} is already in contacts`);
-    return state;
-  }
-}
-
-function filterRecord(state = {}, action) {
+export function filterRecord(state = {}, action) {
   return { ...state, filter: action.payload };
 }
 
-export const reducer = createReducer(
-  {},
-  {
-    [submitRecord]: addRecord,
-    [changeFilter]: filterRecord,
-    [deleteRecord]: delRecord,
-  },
-);
+const contacts = createReducer([], {
+  [fetchPhones.fulfilled]: (state, action) => action.payload,
+});
+
+const isLoading = createReducer(false, {
+  [fetchPhones.fulfilled]: () => false,
+  [fetchPhones.rejected]: () => false,
+  [fetchPhones.pending]: () => true,
+});
+
+const error = createReducer(false, {
+  [fetchPhones.fulfilled]: () => false,
+  [fetchPhones.rejected]: () => true,
+  [deleteById.reject]: () => true,
+  [deleteById.fulfilled]: () => false,
+});
+
+const filter = createReducer('', {
+  [changeFilter]: (_, action) => action.payload,
+});
+
+const isDelete = createReducer(false, {
+  [deleteById.pending]: () => false,
+  [deleteById.fulfilled]: () => true,
+});
+
+const isSubmit = createReducer(false, {
+  [submitPhone.pending]: () => false,
+  [submitPhone.fulfilled]: () => true,
+});
+
+export const reducer = combineReducers({
+  contacts,
+  isLoading,
+  error,
+  filter,
+  isDelete,
+  isSubmit,
+});
